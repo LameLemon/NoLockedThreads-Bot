@@ -1,0 +1,15 @@
+{% extends "nolocked/base.html" %}
+
+
+{% block content %}
+    <div class="row-md">
+        <div class="row-item">
+            <h3>Top 100 subreddits by posts</h3>
+            <table id="recent_locked_posts"></table>
+        </div>
+        
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="{{ url_for('static', filename='js/subreddits.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,139 @@
+body {
+    background-color: #121212;
+    color: white;
+}
+
+h2 {
+    margin: .5rem 0 .5rem 1rem;
+}
+
+h3 {
+    margin: .1rem 0 .1rem 0;
+}
+
+a {
+    text-decoration: none;
+    border-bottom: 1px solid #a5a5a5;
+    color: white
+}
+
+a:hover {
+    border-bottom: 2px solid #a5a5a5;
+}
+
+a:visited {
+    color: #a5a5a5;
+}
+
+td {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding:0 15px 0 15px;
+}
+
+tr:nth-child(odd){
+    background-color: #1b1b1b;
+    color: #fff;
+}
+
+.table_link {
+    width: 5%;
+}
+
+td.recent_link {
+    text-align: center;
+}
+
+img.recent_link {
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
+.recent_title {
+    width: 40%;
+}
+
+.row-sm {
+    max-height: 12rem;
+    margin: .5rem;
+    display:flex;
+}
+
+.row-md {
+    margin: .5rem;
+    display: flex;
+}
+
+.row-item {
+    border: 1px solid #525252;
+    padding: .5rem;
+    flex-grow: 1;
+    flex-basis: 0;
+    margin: .5rem;
+}
+
+#stats table {
+    border:none;
+    border-collapse: collapse;
+    min-width: 50%;
+}
+
+#note-container {
+    overflow: auto;
+}
+#note {
+    padding: 0;
+    margin: 0;
+}
+
+footer,
+nav {
+    display: flex;
+    justify-content: center;
+}
+
+footer a {
+    margin: 0 1rem 0 1rem;
+}
+
+
+nav a {
+    margin: 0 1rem 0 1rem;
+    text-decoration: none;
+    color: white;
+
+}
+nav a.active{
+    color: #a5a5a5;
+    border-bottom: 3px solid #a5a5a5;
+}
+
+nav a:visited {
+    color: white;
+}
+
+/* nav a:hover {
+    border-bottom: 1px solid #a5a5a5;
+} */
+
+/* Data table */
+table.dataTable thead .sorting::after {
+	content: url("https://cdn.datatables.net/1.10.21/images/sort_both.png");
+}
+
+table.dataTable thead .sorting_asc::after {
+    content: url("https://cdn.datatables.net/1.10.21/images/sort_asc.png");
+}
+
+table.dataTable thead .sorting_desc::after {
+    content: url("https://cdn.datatables.net/1.10.21/images/sort_desc.png")
+}
+
+table.dataTable thead .sorting, table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc, table.dataTable thead .sorting_asc_disabled, table.dataTable thead .sorting_desc_disabled {
+	cursor: pointer;
+	*cursor: hand;
+	background-repeat: no-repeat;
+	background-position: center right;
+}

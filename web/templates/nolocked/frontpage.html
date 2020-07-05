@@ -1,0 +1,73 @@
+{% extends "nolocked/base.html" %}
+
+
+{% block content %}
+    <h2>{{title}}</h2>
+    <div class="row-sm">
+        <div class="row-item" id="stats">
+            <h3>Overview:</h3>
+            <table>
+                <tr>
+                    <td>Total posts:</td>
+                    <td id="total">{{ stats.total_posts }}</td>
+                </tr>
+                <tr>
+                    <td>Locked posts:</td>
+                    <td id="locked">{{ stats.locked_posts }}</td>
+                </tr>
+                <tr>
+                    <td>Unlocked posts: </td>
+                    <td id="unlocked">{{ stats.unlocked_posts }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="row-item" id="note-container">
+            <p id="note"><b>Note:</b> This dashboard visualises the number of locked posts from the top subreddits on <a href="https://reddit.com/r/all">r/all</a> after 1st July 2020. This data is collected by <a href="https://reddit.com/u/NoLockedThreadsBot">u/NoLockedThreadsBot</a> for <a href="https://reddit.com/r/NoLockedThreads">r/NoLockedThreads</a>. Please note that only the top subreddits are included and the bot filters out NSFW submissions.</p>
+        </div>
+    </div>
+
+    <div class="row-md">
+        <div class="row-item">
+            <h3>Recently locked posts</h3>
+            <table id="recent_locked_posts"></table>
+        </div>
+    </div>
+
+    <div class="row-md">
+        <div class="row-item">
+            <h3>Top subreddits by number of posts</h3>
+            <canvas id="top_subs" style="height:40vh; width:80vw">        
+        </div>
+    </div>
+
+    <div class="row-md">
+        <div class="row-item">
+            <h3>Top subreddits by number of locked posts</h3>
+            <canvas id="top_locked_subs" style="height:40vh; width:80vw">        
+        </div>
+    </div>
+
+    <script>
+        var locked_unlocked_data = {
+            labels: {{ top_subs.labels|safe }},
+            datasets: [{
+                label: "Unlocked posts",
+                backgroundColor:"rgba(54, 162, 235, 0.7)",
+                data: {{ top_subs.unlocked_posts|safe }}
+            }, {
+                label: "Locked posts",
+                backgroundColor:"rgba(75, 192, 192, 0.7)",
+                data: {{ top_subs.locked_posts|safe }}
+            }]
+        };
+        var locked_data = {
+            labels: {{ top_locked_subs.labels|safe }},
+            datasets: [{
+                label: "Locked posts",
+                backgroundColor:"rgba(75, 192, 192, 0.7)",
+                data: {{ top_locked_subs.locked_posts|safe }}
+            }]
+        };
+    </script>
+    <script src="{{ url_for('static', filename='js/frontpage.js') }}"></script>
+{% endblock %}
