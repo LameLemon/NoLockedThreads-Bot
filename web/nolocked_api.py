@@ -25,7 +25,7 @@ def api_subreddit_count(subreddit, locked=""):
     if limit > 100:
         limit = 100
 
-    db = Database(current_app.config["INCIDENTS_DB"])
+    db = Database(current_app.config["NLT_DB"])
     posts = db.count_subreddit(subreddit, locked, limit)
     res = []
     if subreddit != "all":
@@ -84,7 +84,7 @@ def api_subreddit_count(subreddit, locked=""):
 
 @nolocked_api.route('/stats')
 def api_stats():
-    db = Database(current_app.config["INCIDENTS_DB"])
+    db = Database(current_app.config["NLT_DB"])
     all_posts = db.post_stats_all()
     locked_posts = db.post_stats_locked()
 
@@ -115,7 +115,7 @@ def api_subreddit_locked(subreddit, locked=""):
     if sort.lower() == "asc":
         sort = "asc"
 
-    db = Database(current_app.config["INCIDENTS_DB"])
+    db = Database(current_app.config["NLT_DB"])
     posts = db.fetch_subreddit_locked(subreddit, locked, limit, offset, sort)
     res = {
         "posts": []

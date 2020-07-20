@@ -4,7 +4,7 @@ from nolocked_api import nolocked_api
 from nolocked import nolocked
 
 app = Flask(__name__)
-app.config["INCIDENTS_DB"] = os.path.join("")
+app.config["NLT_DB"] = os.path.join("/home/fry/Code/local/temp/NoLockedThreads-Bot/nlt.db")
 app.register_blueprint(nolocked_api, url_prefix='/api')
 app.register_blueprint(nolocked, url_prefix='/')
 
