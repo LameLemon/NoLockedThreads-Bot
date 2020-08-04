@@ -37,7 +37,7 @@ def frontpage():
 
 @nolocked.route('/r/<subreddit>')
 def subreddit_page(subreddit):
-    subreddit = re.sub(r'[\W_]+', '', subreddit)
+    subreddit = re.sub(r'[\W]+', '', subreddit)
     stats_total = api_subreddit_count(subreddit.lower())
     stats_locked = api_subreddit_count(subreddit.lower(), locked="true")
     stats_unlocked = api_subreddit_count(subreddit.lower(), locked="false")

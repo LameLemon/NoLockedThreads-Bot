@@ -9,4 +9,4 @@ app.register_blueprint(nolocked_api, url_prefix='/api')
 app.register_blueprint(nolocked, url_prefix='/')
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True)
