@@ -31,8 +31,11 @@ function addRecentLocked(posts) {
     th.classList.add("table_link");
     tr.appendChild(th);
 
+    maxlength = 20;
+    if (posts.length < 20)
+        maxlength = posts.length;
 
-    for (var row = 0; row < posts.length; row++) {
+    for (var row = 0; row < maxlength; row++) {
         var tr = table.insertRow();
         for (var column = 0; column < 6; column++) {
             if (row == posts.length + 1 && column == 5) {
@@ -106,7 +109,8 @@ function addChart(posts) {
                 data: [...map.values()].reverse(),
                 label: "Locked post",
                 borderColor: "rgba(75, 192, 192, 0.7)",
-                fill: false
+                fill: false,
+                lineTension: 0
             }]
         },
         options: {
@@ -133,7 +137,7 @@ function addChart(posts) {
 
 const PREFIX = ""
 
-$.get(PREFIX + "/api/r/" + subreddit + "?locked=true&limit=20", function(data, status) {
+$.get(PREFIX + "/api/r/" + subreddit + "?locked=true&limit=", function(data, status) {
     addRecentLocked(data.posts);
     addChart(data.posts)
 });

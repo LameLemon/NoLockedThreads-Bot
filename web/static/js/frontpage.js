@@ -74,8 +74,8 @@ function addRecentLocked(posts) {
 
 function removeData(chart, chart_data) {
     chart.data.labels = chart_data.labels;
-    chart.data.datasets[0].data = chart_data.unlocked_posts
-    chart.data.datasets[1].data = chart_data.locked_posts
+    chart.data.datasets[1].data = chart_data.unlocked_posts
+    chart.data.datasets[0].data = chart_data.locked_posts
     chart.update();
 }
 
@@ -116,17 +116,24 @@ var myChart = new Chart(ctx, {
                 fontColor: "white"
             }
         },
+        tooltips: {
+            mode: 'index',
+            intersect: false
+        },
+        responsive: true,
         scales: {
             yAxes: [{
                 ticks: {
                     beginAtZero: true,
                     fontColor: "white"
-                }
+                },
+                stacked: true
             }],
             xAxes: [{
                 ticks: {
                     fontColor: "white"
-                }
+                },
+                stacked: true
             }]
         }
     }

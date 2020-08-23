@@ -9,7 +9,7 @@ def api_root():
     return "you wot m8"
 
 @nolocked_api.route('/r/<subreddit>/count')
-def api_subreddit_count(subreddit, locked=""):
+def api_subreddit_count(subreddit, locked="", limit=20):
     subreddit = subreddit.lower()
     if locked == "":
         locked = request.args.get("locked", default="")
@@ -21,10 +21,11 @@ def api_subreddit_count(subreddit, locked=""):
     else:
         locked = None
 
-    limit = request.args.get("limit", default=20, type=int)
+    if limit == 20:
+        limit = request.args.get("limit", default=20, type=int)
     if limit > 100:
         limit = 100
-
+    print(limit)
     db = Database(current_app.config["NLT_DB"])
     posts = db.count_subreddit(subreddit, locked, limit)
     res = []

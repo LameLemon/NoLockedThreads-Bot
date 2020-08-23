@@ -51,20 +51,20 @@
         var locked_unlocked_data = {
             labels: {{ top_subs.labels|safe }},
             datasets: [{
-                label: "Unlocked posts",
-                backgroundColor:"rgba(54, 162, 235, 0.7)",
-                data: {{ top_subs.unlocked_posts|safe }}
-            }, {
                 label: "Locked posts",
-                backgroundColor:"rgba(75, 192, 192, 0.7)",
+                backgroundColor:"rgb(191, 63, 127)",
                 data: {{ top_subs.locked_posts|safe }}
+            },{
+                label: "Unlocked posts",
+                backgroundColor:"rgb(54, 162, 235)",
+                data: {{ top_subs.unlocked_posts|safe }}
             }]
         };
         var locked_data = {
             labels: {{ top_locked_subs.labels|safe }},
             datasets: [{
                 label: "Locked posts",
-                backgroundColor:"rgba(75, 192, 192, 0.7)",
+                backgroundColor:"rgb(191, 63, 127)",
                 data: {{ top_locked_subs.locked_posts|safe }}
             }]
         };
