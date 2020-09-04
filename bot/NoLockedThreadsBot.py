@@ -56,14 +56,25 @@ def submit(submission, to_crosspost, retries=0):
         if len(title) > 300:
             title = title[:250] + "..."
         post = ""
+
+        if submission.is_self:
+            body = submission.selftext
+        else:
+            body = "[Link from post]({})".format(submission.url)
+
+        comment_text = "Original post: [{}]({}) \n\n"\
+            "Body: {}\n\n"\
+            "----\n\n"\
+            "^[Bugs](https://www.reddit.com/message/compose?to=%2Fr%2FNoLockedThreads)".format(submission.title, link, body)
+
         try:
             if to_crosspost:
                 post = submission.crosspost(SUB, title)
-                post.reply("Original post: [{}]({}) \n\n----\n^[Bugs](https://www.reddit.com/message/compose?to=%2Fr%2FNoLockedThreads)".format(submission.title, link))
+                post.reply(comment_text)
                 return post
             else:
                 post = reddit.subreddit(SUB).submit(title, url=link)
-                post.reply("Original post: [{}]({}) \n\n----\n^[Bugs](https://www.reddit.com/message/compose?to=%2Fr%2FNoLockedThreads)".format(submission.title, link))
+                post.reply(comment_text)
                 return post
         except praw.exceptions.APIException as e:
             print(e)
@@ -71,11 +82,12 @@ def submit(submission, to_crosspost, retries=0):
             if 'RATELIMIT' in str(e):
                 print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "You are doing too much, trying to post again in 15 minutes")
                 sleep(API_WAIT)
-                submit(submission, True, retries)
+                post = submit(submission, True, retries)
             elif 'INVALID_CROSSPOST_THING' in str(e):
-                submit(submission, False, retries)
+                post = submit(submission, False, retries)
         except Exception as e:
             print(e, submission.permalink)
+        return post
 
 '''
 Posts submission to targetted subreddit if does not exist in the table
@@ -103,8 +115,6 @@ def populateBuffer():
     for submission in reddit.subreddit('all').hot(limit=1000):
         if submission.locked and (not submission.over_18) and str(submission.subreddit) not in BLACKLIST:
             postSub(submission)
-            with open("stats.csv", "a") as stats:
-                stats.write("{},{},{},{}\n".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), submission.subreddit.display_name, submission.permalink, "0"))
         elif str(submission.id) not in buffer:
             db = Database(db_location)
             db.add_post(submission.id, submission.title, submission.created, 
