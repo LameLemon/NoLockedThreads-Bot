@@ -1,0 +1,19 @@
+default:
+    subreddit: test
+    blacklist:
+        - legaladvice
+    sleep: 200
+    api_wait: 800
+    buffer_size: 1000
+    max_retires: 3
+reddit:
+    using_token: false
+    client_id:
+    client_secret:
+    user_agent:
+    refresh_token:
+    redirect_uri:
+    username:
+    password:
+database:
+    location: nolockedthread.db

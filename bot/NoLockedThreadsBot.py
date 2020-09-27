@@ -7,30 +7,47 @@ from time import sleep, strftime
 from datetime import datetime
 import sqlite3
 from database import Database
+import yaml
 
-'''
-Initialise Reddit
-'''
-reddit = praw.Reddit(client_id='',
-                     client_secret='',
-                     username='',
-                     password='',
-                     user_agent='Posts locked threads to specified subreddit by /u/PeskyPotato')
+with open("config.yml", "r") as stream:
+    try:
+        config = yaml.safe_load(stream)
+    except yaml.YAMLError as e:
+        print(e)
 
-# Subreddit to post to
-SUB = 'test'
-# Subs to blackslit, e.g. ['test', 'AskReddit']
-BLACKLIST = []
-# Sleep between searches
-SLEEP = 200
-API_WAIT = 1000
-# Max size of buffer
-BUFFER_SIZE = 1000
-# Maximum retries in case of error
-MAX_RETRIES = 3
-db_location = "nolockedthread.db"
+SUB = config["default"].get("subreddit", 'test')
+BLACKLIST = config["default"].get("blacklist", [])
+SLEEP = config["default"].get("sleep", 200)
+API_WAIT = config["default"].get("api_wait", 800)
+BUFFER_SIZE = config["default"].get("buffer_size", 1000)
+MAX_RETRIES = config["default"].get("max_retires", 3)
+db_location = config["database"].get("location", "nolockedthreads.db")
 
-''' Do not edit below this point'''
+using_token = config["reddit"].get("using_token", True)
+client_id = config["reddit"].get("client_id", "")
+client_secret = config["reddit"].get("client_secret", "")
+user_agent = config["reddit"].get("user_agent", "Posts lock threads to specified subreddit by /u/PeskyPotato")
+refresh_token = config["reddit"].get("refresh_token", "")
+redirect_uri = config["reddit"].get("redirect_uri", "")
+username = config["reddit"].get("username", "")
+password = config["reddit"].get("password", "")
+
+if not user_agent:
+    user_agent = "Posts lock threads to specified subreddit by /u/PeskyPotato"
+
+if using_token:
+    reddit = praw.Reddit(client_id=client_id,
+                    client_secret=client_secret,
+                    user_agent=user_agent,
+                    refresh_token=refresh_token,
+                    redirect_uri=redirect_uri)
+else:
+    reddit = praw.Reddit(client_id=client_id,
+                     client_secret=client_secret,
+                     username=username,
+                     password=password,
+                     user_agent=user_agent)
+
 buffer = []
 
 '''
